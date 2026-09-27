@@ -1,3 +1,23 @@
+# 雾凇拼音 · 个人语言学习分支
+
+本分支 `personal/translation-annotation` 基于 [雾凇拼音](https://github.com/iDvel/rime-ice)，为 macOS 鼠须管的全拼方案增加**中文候选旁的英文释义**。原有输入、候选排序和词频仍由雾凇拼音负责；释义来自本地词表，不请求网络翻译。
+
+## 使用本分支
+
+1. 在鼠须管用户目录 `~/Library/Rime` 使用 `personal/translation-annotation` 分支，备份现有用户数据后重新部署鼠须管。不要按下方原版安装说明清空正在使用的目录。
+2. 选择「雾凇拼音」全拼方案，输入 `kaifa` 等拼音；词表命中的候选会在原注释后显示英文释义。
+3. 按 <kbd>F4</kbd> 打开方案选单，切换「译关 / EN」。默认开启；未命中的候选保持原样。
+
+实现位于 [`rime_ice.custom.yaml`](./rime_ice.custom.yaml)、[`lua/translation_annotation.lua`](./lua/translation_annotation.lua) 和 [`glossary/`](./glossary/)。英文词表来自青简，约 23.2 万条，按 GPL-3.0-or-later 发布；详见 [`glossary/SOURCE.txt`](./glossary/SOURCE.txt)。释义由机器生成，可能有错译。
+
+## 同步更新
+
+GitHub 工作流每月 1 日自动合并雾凇上游到本 fork 的 `main`，再合并到此分支；也可在 Actions 中手动运行。发生冲突或检查失败时不会强行推送。远端更新后，在本机当前分支执行 `git pull --ff-only`，然后重新部署鼠须管。分支管理细则见 [`AGENT.md`](./AGENT.md)。
+
+---
+
+以下为雾凇拼音上游说明，保留供查阅；本分支的安装和更新以**上方说明**为准。
+
 # 雾凇拼音
 
 ![demo](./others/asserts/overview.png)
