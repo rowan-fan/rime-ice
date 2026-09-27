@@ -1,0 +1,5 @@
+English glossary: qingjian-team/qingjian, assets/glossary/glossary-en.tsv
+Source revision: 40e3e550425466e6ba9c0a14de3a77ed04862799
+License: GPL-3.0-or-later (https://github.com/qingjian-team/qingjian/blob/main/LICENSE)
+Downloaded: 2026-09-27
+The glosses are machine-generated and may contain errors.

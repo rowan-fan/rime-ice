@@ -1,0 +1,8 @@
+patch:
+  "switches/+":
+    - name: translation_annotation
+      states: [译关, EN]
+      reset: 1
+
+  "engine/filters/+":
+    - lua_filter@*translation_annotation
