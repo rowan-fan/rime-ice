@@ -6,7 +6,7 @@
 
 - `upstream` 指向 `iDvel/rime-ice`，`origin` 指向 `rowan-fan/rime-ice`。
 - `main` 只保留上游内容及 fork 专用的 `.github/workflows/sync-upstream.yml`，不在其上提交个人输入法功能；个人定制使用长期分支 `personal/translation-annotation`。
-- 工作流每周及手动触发时先将上游合并到 `origin/main`，再将其合并到个人分支；检查失败或发生冲突时不推送个人分支。本机保持个人分支为当前分支，确认工作区干净后用 `git pull --ff-only` 获取更新并重新部署。
+- 工作流每月及手动触发时先将上游合并到 `origin/main`，再将其合并到个人分支；无变更时跳过构建，检查失败或发生冲突时不推送。本机保持个人分支为当前分支，确认工作区干净后用 `git pull --ff-only` 获取更新并重新部署。
 - 不在使用中的 `~/Library/Rime` 为同步而切换到 `main`；确需检查其他分支时，使用独立 worktree。禁止强制推送或重写已共享的个人分支历史。
 - 合并前备份用户目录。发生冲突时优先保留上游文件的更新，将个人功能留在独立配置和脚本中；不要为解决冲突删除文件或覆盖用户数据。
 
