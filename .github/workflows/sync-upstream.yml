@@ -1,0 +1,54 @@
+name: Sync upstream and personal branch
+
+on:
+  schedule:
+    - cron: "17 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-upstream-and-personal
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: github.repository == 'rowan-fan/rime-ice'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout fork main
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Merge upstream into main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add upstream https://github.com/iDvel/rime-ice.git
+          git fetch upstream main
+          git merge --no-edit upstream/main
+
+      - name: Merge main into personal branch
+        run: |
+          git fetch origin personal/translation-annotation
+          git switch -c personal/translation-annotation --track origin/personal/translation-annotation
+          git merge --no-edit main
+
+      - name: Install lint dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lua5.4 luacheck yamllint
+
+      - name: Check merged configuration
+        env:
+          LUAC: luac5.4
+        run: |
+          make -C others/script lint
+          lua5.4 others/script/tests/translation_annotation.lua "$PWD"
+          git diff --check origin/personal/translation-annotation..HEAD
+
+      - name: Push checked branches
+        run: git push origin main:main HEAD:personal/translation-annotation
