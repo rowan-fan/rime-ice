@@ -43,12 +43,20 @@ jobs:
           sudo apt-get install -y lua5.4 liblua5.4-dev luarocks yamllint
           sudo luarocks --lua-version=5.4 install luacheck
 
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: others/script/go.mod
+          cache-dependency-path: others/script/go.sum
+
       - name: Check merged configuration
         env:
           LUAC: luac5.4
         run: |
+          make -C others/script build
           make -C others/script lint
           lua5.4 others/script/tests/translation_annotation.lua "$PWD"
+          git diff --exit-code
           git diff --check origin/personal/translation-annotation..HEAD
 
       - name: Push checked branches
